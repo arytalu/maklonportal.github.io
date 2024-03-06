@@ -1,0 +1,18 @@
+.jumbotron {
+  padding-top: 6rem;
+  background-color: #e9cef1;
+}
+
+#produk {
+  background-color: #e9cef1;
+}
+
+#devider {
+  width: 600px;
+  align: center;
+  border-top: 3px solid;
+}
+
+section {
+  padding-top: 5rem;
+}
