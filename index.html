@@ -139,15 +139,22 @@
 
         <div class="row justify-content-center">
           <div class="col-md-8">
-            <form>
+            <!-- alert -->
+            <div class="alert alert-success alert-dismissible fade show d-none form-notif" role="alert">
+              <strong>Terima Kasih!</strong> Pesan anda sudah terkirim. Mohon tunggu admin kami akan segera menghubungi anda.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <!-- akhir alert -->
+
+            <form name="owm-contact-us">
               <div class="mb-3">
                 <label for="nama" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="iname" aria-describedby="iname" />
+                <input type="text" class="form-control" id="iname" aria-describedby="iname" name="nama" />
                 <div id="namahelp" class="form-text">Masukan nama anda</div>
               </div>
 
-              <select class="form-select mb-3" aria-label="faq">
-                <option selected>Pertanyaan yang biasa di tanyakan :</option>
+              <select class="form-select mb-3" aria-label="faq" name="pertanyaan">
+                <option selected name="pertanyaan">Pertanyaan yang biasa di tanyakan :</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -155,17 +162,22 @@
 
               <div class="mb-3">
                 <label for="notelp" class="form-label">Nomor Telp</label>
-                <input type="text" class="form-control" id="notelp" />
+                <input type="text" class="form-control" id="notelp" name="nomor" />
                 <div id="notelphelp" class="form-text">Pastikan nomor terhubung dengan Whatssap</div>
               </div>
               <div class="mb-3">
                 <div class="form-floating">
-                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="keterangan"></textarea>
                   <label for="floatingTextarea">Tuliskan Keterangan Tambahan</label>
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-success">Submit</button>
+              <button type="submit" class="btn btn-primary btn-kirim">Submit</button>
+
+              <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
             </form>
           </div>
         </div>
@@ -193,5 +205,33 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbymM9kk_KV1flaeee0I8KUjrPUnbnGTlrR7bQ6xIdxuFeWjT5IuKA0U-k_VPQ5pFJ4I/exec";
+      const form = document.forms["owm-contact-us"];
+      const btnKirim = document.querySelector(".btn-kirim");
+      const btnLoading = document.querySelector(".btn-loading");
+      const formNotif = document.querySelector(".form-notif");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // ketika tombol kirim di klik
+        // tambilkan tombol loading, hilangkan tombol kirim
+        btnLoading.classList.toggle("d-none");
+        btnKirim.classList.toggle("d-none");
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            // tambilkan tombol kirim, hilangkan tombol loading
+            btnLoading.classList.toggle("d-none");
+            btnKirim.classList.toggle("d-none");
+            // tampilkan alert
+            formNotif.classList.toggle("d-none");
+            // reset form
+            form.reset();
+            console.log("Success!", response);
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
   </body>
 </html>
