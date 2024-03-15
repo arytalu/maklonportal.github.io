@@ -1,18 +1,17 @@
-.jumbotron {
-  padding-top: 6rem;
-  background-color: #e9cef1;
+#jumbotron {
+  background-color: #fff;
+  padding-top: 5rem;
 }
 
 #produk {
   background-color: #e9cef1;
 }
 
-#devider {
-  width: 600px;
-  align: center;
-  border-top: 3px solid;
-}
-
-section {
-  padding-top: 5rem;
+#about {
+  background-image: url("../img/bcg1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-blend-mode: soft-light;
+  text-shadow: 0px 0px 3px #000;
 }
